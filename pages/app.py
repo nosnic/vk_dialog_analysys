@@ -1,7 +1,25 @@
 import streamlit as st
-import analyzer
+from tools import analyzer
 from importlib import reload
+import plotly.graph_objs as go
 reload(analyzer)
+
+
+def show_image_with_plotly(image, title="Image"):
+    """
+    Display a single image using Plotly.
+
+    Parameters:
+    - image: Image data (numpy array).
+    - title: Title for the image (optional).
+    """
+    fig = go.Figure()
+    fig.add_trace(go.Image(z=image))
+    fig.update_xaxes(showticklabels=False)
+    fig.update_yaxes(showticklabels=False)
+    fig.update_layout(title=title, title_x=0.5)
+    fig.show()
+
 
 def main():
     st.title("Vk Dialog Analysis")
@@ -52,10 +70,28 @@ def main():
         offset = st.slider(
             label='Выбери сколько часов после сообщения должно пройти чтобы это считалось новым диалогом',
             min_value=1,
+            value=5,
             max_value=40,
             step=1)
         st.write('Количество начатых бесед каждым участником:')
         st.write(anal.get_amount_of_started_conversations(offset))
+
+        st.plotly_chart(anal.create_seasoning_with_tolling_mean())
+
+        st.plotly_chart(anal.create_seasoning_hour())
+        st.plotly_chart(anal.create_seasoning_day())
+        st.plotly_chart(anal.create_seasoning_month())
+
+        st.image(anal.create_wordcloud(), caption='Облако слов по всей беседе')
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.header(f"Облако слов {anal.your_name}")
+            st.image(anal.create_wordcloud('only_you'))
+
+        with col2:
+            st.header(f"Облако слов {anal.companion_name}")
+            st.image(anal.create_wordcloud('only_kent'))
 
 
 
