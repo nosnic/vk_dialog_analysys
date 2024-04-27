@@ -23,18 +23,15 @@ def show_image_with_plotly(image, title="Image"):
 
 def main():
     st.title("Vk Dialog Analysis")
-    st.write("Введите свой access token:")
-    token = st.text_input("Access Token")
     flag = False
-    flag1 = False
     flag2 = False
     flag3 = False
     friend_names = []
     friend_dict = {}
 
-    if token:
+    if st.session_state.token:
         try:
-            anal = analyzer.VkDialogAnalyzer(token)
+            anal = analyzer.VkDialogAnalyzer(st.session_state.token)
             flag = True
             properties = anal.vk_session.users.get(user_ids=anal.friend_list)
             for friend in properties:
