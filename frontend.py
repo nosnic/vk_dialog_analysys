@@ -7,7 +7,7 @@ from importlib import reload
 reload(analyzer)
 if 'token' not in st.session_state:
     st.session_state['token'] = ''
-st.page_link("main.py", label="Home")
+st.page_link("frontend.py", label="Home")
 
 st.write("Введите свой access token:")
 token = st.text_input("Access Token")
