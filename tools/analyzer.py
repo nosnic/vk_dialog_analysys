@@ -22,7 +22,7 @@ class VkDialogAnalyzer:
         self.token = token
         self.vk_session = vk_api.VkApi(token=self.token).get_api()
         self.messages = None
-        self.friend_list = self.vk_session.friends.get(order='hints')['items']
+        self.friend_list = self.vk_session.friends.get()['items']
         self.test = 0
         self.dataframe = None
 

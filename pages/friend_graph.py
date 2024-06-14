@@ -17,7 +17,7 @@ def main():
                 user_ids=fri.vk_session.users.get()[0]['id']
             )
             properties.extend(
-                fri.vk_session.users.get(user_ids=fri.vk_session.friends.get(order='hints')['items'])
+                fri.vk_session.users.get(user_ids=fri.vk_session.friends.get()['items'])
             )
             for friend in properties:
                 print(friend)
